@@ -1,5 +1,4 @@
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -8,9 +7,11 @@ public class TestaConexao {
 
 	public static void main(String[] args) throws SQLException {
 
-		Connection connection;
-		connection = DriverManager.getConnection(
-				"jdbc:mysql://localhost:3306/loja_virtual?useTimezone=true&serverTimezone=UTC", "root", "will17");
+//		Connection connection;
+//		connection = DriverManager.getConnection(
+//				"jdbc:mysql://localhost:3306/loja_virtual?useTimezone=true&serverTimezone=UTC", "root", "will17");
+		
+		Connection connection = ConnectionFactory.recuperaConexao();
 
 		Statement stm = connection.createStatement();
 		stm.execute("SELECT ID, NOME, DESCRICAO FROM PRODUTO");
