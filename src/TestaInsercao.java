@@ -1,4 +1,5 @@
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -7,10 +8,16 @@ public class TestaInsercao {
 
 	public static void main(String[] args) throws SQLException {
 		
-		Connection connection = ConnectionFactory.recuperaConexao();
-		Statement stm = connection.createStatement();
+		String nome = "Pilha";
+		String descricao = "Alcalina";
 		
-		stm.execute("INSERT INTO PRODUTO (nome, descricao) VALUES ('MOUSE', 'MOUSE SEM FIO')", Statement.RETURN_GENERATED_KEYS);
+		Connection connection = ConnectionFactory.recuperaConexao();
+		PreparedStatement stm = connection.prepareStatement("INSERT INTO PRODUTO (nome, descricao) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
+
+		stm.setString(1, nome);
+		stm.setString(2, descricao);
+		
+		stm.execute();
 		
 		ResultSet rst = stm.getGeneratedKeys();
 		
