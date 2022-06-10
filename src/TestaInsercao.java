@@ -11,10 +11,22 @@ public class TestaInsercao {
 		Connection connection = ConnectionFactory.recuperaConexao();
 		//assumindo o controle do commit que antes estava no JDBC
 		connection.setAutoCommit(Boolean.FALSE);
-		PreparedStatement stm = connection.prepareStatement("INSERT INTO PRODUTO (nome, descricao) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
-
-		adicionarVariavel("TV", "GIGANTE", stm);
-		adicionarVariavel("MICROONDAS", "BRANCO", stm);
+		
+		try {
+			PreparedStatement stm = connection.prepareStatement("INSERT INTO PRODUTO (nome, descricao) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
+			
+			adicionarVariavel("TV", "GIGANTE", stm); 
+			adicionarVariavel("MICROONDAS", "BRANCO", stm);
+			
+			connection.commit();
+			
+			stm.close();
+			connection.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("ROLLBACK EXECUTADO");
+			connection.rollback();
+		}
 	}
 
 	private static void adicionarVariavel(String nome, String descricao, PreparedStatement stm) throws SQLException {
