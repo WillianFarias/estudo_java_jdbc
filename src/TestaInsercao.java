@@ -8,12 +8,16 @@ public class TestaInsercao {
 
 	public static void main(String[] args) throws SQLException {
 		
-		String nome = "Pilha";
-		String descricao = "Alcalina";
-		
 		Connection connection = ConnectionFactory.recuperaConexao();
+		//assumindo o controle do commit que antes estava no JDBC
+		connection.setAutoCommit(Boolean.FALSE);
 		PreparedStatement stm = connection.prepareStatement("INSERT INTO PRODUTO (nome, descricao) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
 
+		adicionarVariavel("TV", "GIGANTE", stm);
+		adicionarVariavel("MICROONDAS", "BRANCO", stm);
+	}
+
+	private static void adicionarVariavel(String nome, String descricao, PreparedStatement stm) throws SQLException {
 		stm.setString(1, nome);
 		stm.setString(2, descricao);
 		
