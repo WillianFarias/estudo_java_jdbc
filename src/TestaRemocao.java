@@ -6,16 +6,17 @@ import java.sql.Statement;
 public class TestaRemocao {
 
 	public static void main(String[] args) throws SQLException {
-		
-		Connection connection = ConnectionFactory.recuperaConexao();
-		PreparedStatement stm = connection.prepareStatement("DELETE FROM PRODUTO WHERE ID > ?");
-		
-		stm.setInt(1, 2);
-		
-		stm.execute();
-		
-		Integer linhasModificadas = stm.getUpdateCount();
-		
-		System.out.println("Quantidade de linhas modificadas: " + linhasModificadas);
+
+		try (Connection connection = ConnectionFactory.recuperaConexao()) {
+
+			try (PreparedStatement stm = connection.prepareStatement("DELETE FROM PRODUTO WHERE ID > ?")) {
+
+				stm.setInt(1, 2);
+				stm.execute();
+
+				Integer linhasModificadas = stm.getUpdateCount();
+				System.out.println("Quantidade de linhas modificadas: " + linhasModificadas);
+			}
+		}
 	}
 }

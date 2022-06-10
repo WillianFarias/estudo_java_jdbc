@@ -12,21 +12,23 @@ public class TestaConexao {
 //		connection = DriverManager.getConnection(
 //				"jdbc:mysql://localhost:3306/loja_virtual?useTimezone=true&serverTimezone=UTC", "root", "will17");
 		
-		Connection connection = ConnectionFactory.recuperaConexao();
-
-		PreparedStatement stm = connection.prepareStatement("SELECT ID, NOME, DESCRICAO FROM PRODUTO");
-		stm.execute();
-		
-		ResultSet rst = stm.getResultSet();
-		
-		while(rst.next()) {
-			Integer id = rst.getInt("ID");
-			String nome = rst.getString("NOME");
-			String descricao = rst.getString("DESCRICAO");
+		try(Connection connection = ConnectionFactory.recuperaConexao()) {
 			
-			System.out.println("Id: " + id + " Nome:" + nome + " Descricao: " + descricao);
+			try(PreparedStatement stm = connection.prepareStatement("SELECT ID, NOME, DESCRICAO FROM PRODUTO")) {
+				
+				stm.execute();
+				
+				ResultSet rst = stm.getResultSet();
+				
+				while(rst.next()) {
+					Integer id = rst.getInt("ID");
+					String nome = rst.getString("NOME");
+					String descricao = rst.getString("DESCRICAO");
+					
+					System.out.println("Id: " + id + " Nome:" + nome + " Descricao: " + descricao);
+				}
+			}
 		}
-		
-		connection.close();
+//		connection.close();
 	}
 }
