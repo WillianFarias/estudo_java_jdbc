@@ -6,8 +6,9 @@ import java.sql.Statement;
 public class TestaRemocao {
 
 	public static void main(String[] args) throws SQLException {
+		ConnectionFactory connectionFactory = new ConnectionFactory();
 
-		try (Connection connection = ConnectionFactory.recuperaConexao()) {
+		try (Connection connection = connectionFactory.recuperaConexao()) {
 
 			try (PreparedStatement stm = connection.prepareStatement("DELETE FROM PRODUTO WHERE ID > ?")) {
 

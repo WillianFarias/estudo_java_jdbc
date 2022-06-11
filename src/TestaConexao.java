@@ -11,8 +11,8 @@ public class TestaConexao {
 //		Connection connection;
 //		connection = DriverManager.getConnection(
 //				"jdbc:mysql://localhost:3306/loja_virtual?useTimezone=true&serverTimezone=UTC", "root", "will17");
-		
-		try(Connection connection = ConnectionFactory.recuperaConexao()) {
+		ConnectionFactory connectionFactory = new ConnectionFactory();
+		try(Connection connection = connectionFactory.recuperaConexao()) {
 			
 			try(PreparedStatement stm = connection.prepareStatement("SELECT ID, NOME, DESCRICAO FROM PRODUTO")) {
 				

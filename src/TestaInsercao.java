@@ -10,8 +10,9 @@ public class TestaInsercao {
 
 //		Connection connection = ConnectionFactory.recuperaConexao();
 		// assumindo o controle do commit que antes estava no JDBC
-
-		try (Connection connection = ConnectionFactory.recuperaConexao()) {
+		ConnectionFactory connectionFactory = new ConnectionFactory();
+		
+		try (Connection connection = connectionFactory.recuperaConexao()) {
 			connection.setAutoCommit(Boolean.FALSE);
 
 			try (PreparedStatement stm = connection.prepareStatement(
