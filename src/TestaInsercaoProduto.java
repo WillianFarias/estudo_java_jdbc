@@ -1,5 +1,6 @@
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import dao.ProdutoDAO;
 import model.Produto;
@@ -11,7 +12,11 @@ public class TestaInsercaoProduto {
 		Produto comoda = new Produto("Comoda", "Comoda Vertical");
 
 		try (Connection connection = new ConnectionFactory().recuperaConexao()) {
-			new ProdutoDAO(connection).salvar(comoda);
+			ProdutoDAO produtoDAO = new ProdutoDAO(connection);
+			produtoDAO.salvar(comoda);
+			
+			List<Produto> listaDeProdutos = produtoDAO.listarTodosProdutos();
+			listaDeProdutos.stream().forEach(System.out::println);
 		}
 	}
 }
