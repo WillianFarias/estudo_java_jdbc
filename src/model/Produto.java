@@ -18,11 +18,17 @@ public class Produto {
 	}
 
 	public String getNome() {
-		return nome;
+		if (nome == null) {
+			nome = new String("");
+		}
+		return this.nome;
 	}
 
 	public String getDescricao() {
-		return descricao;
+		if (descricao == null) {
+			descricao = new String("");
+		}
+		return this.descricao;
 	}
 
 	public void setId(Integer id) {
